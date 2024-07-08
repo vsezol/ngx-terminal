@@ -1,20 +1,12 @@
-import * as blessed from 'blessed';
-import { Widgets } from 'blessed';
-import * as contrib from 'blessed-contrib';
+import { Widgets, box, text } from 'blessed';
 
-import { deferredElement } from './adapters/deferred';
-import { gridFactory } from './adapters/grid-adapter';
+export type ElementFactory = (
+  options: Widgets.ElementOptions
+) => Widgets.BlessedElement;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ElementFactory = (value: any) => Widgets.BoxElement;
+export type ElementName = 'text' | 'box';
 
-export const elementsFactory: Map<string, ElementFactory> = new Map()
-  .set('text', blessed.text)
-  .set('box', blessed.box)
-  .set('table', blessed.table)
-  .set('line', deferredElement(contrib.line))
-  .set('sparkline', deferredElement(contrib.sparkline))
-  .set('bar', deferredElement(contrib.bar))
-  .set('table', deferredElement(contrib.table))
-  .set('map', deferredElement(contrib.map))
-  .set('grid', gridFactory);
+export const elementsFactory: Map<ElementName, ElementFactory> = new Map([
+  ['text', text],
+  ['box', box],
+]);

@@ -19,7 +19,7 @@ export class TerminalElementSchemaRegistry extends ElementSchemaRegistry {
     return 'ng-component';
   }
 
-  securityContext(_tagName: string, _propName: string): any {
+  securityContext(_tagName: string, _propName: string): SecurityContext {
     return SecurityContext.NONE;
   }
 

@@ -9,8 +9,8 @@ import {
   RendererType2,
 } from '@angular/core';
 import { Widgets } from 'blessed';
-import * as contrib from 'blessed-contrib';
 
+import { ElementName } from './elements-registry';
 import { Screen } from './screen';
 
 @Injectable()
@@ -36,7 +36,7 @@ export class TerminalRenderer implements Renderer2 {
 
   constructor(private screen: Screen) {}
 
-  createElement(name: string, namespace?: string | null): any {
+  createElement(name: ElementName, namespace?: string | null): any {
     return this.screen.createElement(name);
   }
 
@@ -52,20 +52,13 @@ export class TerminalRenderer implements Renderer2 {
 
   appendChild(
     parent: Widgets.BlessedElement,
-    newChild: Widgets.BlessedElement
+    child: Widgets.BlessedElement
   ): void {
-    if (newChild instanceof contrib.grid) {
+    if (!child) {
       return;
     }
 
-    if (parent instanceof contrib.grid) {
-      (newChild as any).appendTo(parent);
-      return;
-    }
-
-    if (newChild) {
-      parent.append(newChild);
-    }
+    parent.append(child);
   }
 
   createComment(value: string): any {}

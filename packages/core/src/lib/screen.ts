@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import * as blessed from 'blessed';
 import { Widgets } from 'blessed';
 
-import { ElementFactory, elementsFactory } from './elements-registry';
+import {
+  ElementFactory,
+  ElementName,
+  elementsFactory,
+} from './elements-registry';
 
 @Injectable()
 export class Screen {
@@ -13,7 +17,7 @@ export class Screen {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  createElement(name: string, options: any = {}): Widgets.BoxElement {
+  createElement(name: ElementName, options: any = {}): Widgets.BlessedElement {
     let elementFactory: ElementFactory | undefined = elementsFactory.get(name);
 
     if (!elementFactory) {
